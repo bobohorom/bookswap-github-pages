@@ -17,7 +17,7 @@ const FALLBACK_BOOK_IMAGE = 'data:image/svg+xml;base64,' + btoa(`
   <rect x="20" y="20" width="160" height="260" fill="white" stroke="#333" stroke-width="2"/>
   <line x1="40" y1="20" x2="40" y2="280" stroke="#ccc" stroke-width="1"/>
   <rect x="45" y="40" width="120" height="30" fill="#E2725B"/>
-  <text x="100" y="60" text-anchor="middle" fill="white" font-family="Arial" font-size="16" font-weight="bold">📚</text>
+  <text x="100" y="60" text-anchor="middle" fill="white" font-family="Arial" font-size="16" font-weight="bold">BOOK</text>
   <text x="100" y="150" text-anchor="middle" fill="#666" font-family="Arial" font-size="12">Image non</text>
   <text x="100" y="170" text-anchor="middle" fill="#666" font-family="Arial" font-size="12">disponible</text>
   <text x="100" y="190" text-anchor="middle" fill="#666" font-family="Arial" font-size="12">hors ligne</text>
