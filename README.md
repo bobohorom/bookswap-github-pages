@@ -4,7 +4,7 @@ Progressive Web App pour gérer votre bibliothèque personnelle.
 
 ## 🚀 Démo
 
-**URL :** https://bobohorom.github.io/bookswap-pwa/
+**URL :** https://bobohorom.github.io/bookswap-github-pages/
 
 ## 📱 Installation
 
