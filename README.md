@@ -1,10 +1,10 @@
-# 📚 BookSwap PWA
+# 📚 PWA légère pour github pages
 
 Progressive Web App pour gérer votre bibliothèque personnelle.
 
 ## 🚀 Démo
 
-**URL :** https://[username].github.io/bookswap-pwa/
+**URL :** https://bobohorom.github.io/bookswap-github-pages/
 
 ## 📱 Installation
 
@@ -33,7 +33,7 @@ Progressive Web App pour gérer votre bibliothèque personnelle.
 
 ```bash
 # Cloner le repository
-git clone https://github.com/[username]/bookswap-pwa.git
+git clone https://github.com/bobohorom/bookswap-github-pages.git
 cd bookswap-pwa
 
 # Serveur local
