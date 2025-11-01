@@ -352,7 +352,16 @@ class BookSwapApp {
       const title = modal.querySelector('#bookTitle').value;
       const author = modal.querySelector('#bookAuthor').value;
       const status = modal.querySelector('#bookStatus').value;
-      const image = modal.querySelector('#bookImage').value || 'https://via.placeholder.com/200x300?text=No+Image';
+      // Générer une image SVG par défaut si pas d'URL fournie
+      const defaultImage = 'data:image/svg+xml;base64,' + btoa(`
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
+  <rect width="200" height="300" fill="#E2725B"/>
+  <rect x="20" y="20" width="160" height="260" fill="white" stroke="#333" stroke-width="2"/>
+  <text x="100" y="150" text-anchor="middle" fill="#666" font-family="Arial" font-size="16">Pas d'image</text>
+  <text x="100" y="180" text-anchor="middle" fill="#666" font-family="Arial" font-size="14">disponible</text>
+</svg>
+      `);
+      const image = modal.querySelector('#bookImage').value || defaultImage;
 
       this.addBook({ title, author, status, image });
       document.body.removeChild(modal);
@@ -596,7 +605,8 @@ class BookSwapApp {
     if (!navigator.onLine) return false;
 
     try {
-      const response = await fetch('/', { 
+      // Test connectivité avec l'index.html plutôt que la racine
+      const response = await fetch('./index.html', { 
         method: 'HEAD',
         cache: 'no-cache',
         signal: AbortSignal.timeout(3000) // 3 second timeout
