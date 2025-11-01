@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <title>BookSwap - Ma Bibliothèque</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BookSwap - Gérez votre bibliothèque personnelle et échangez des livres">
+  
+    <!-- GitHub Pages optimizations -->
+    <meta name="github-pages" content="true">
+  <meta name="theme-color" content="#E2725B">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="./manifest.json">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  
+  <!-- External Dependencies -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#E2725B", // Terracotta
+            "accent": "#87CEEB", // Sky Blue
+            "background-light": "#F5F5F5",
+            "background-dark": "#101c22",
+            "text-light": "#1f2937",
+            "text-dark": "#f3f4f6",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+  
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
+    }
+    
+    body {
+      min-height: max(884px, 100dvh);
+    }
+    
+    .install-banner {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #E2725B, #87CEEB);
+      color: white;
+      text-align: center;
+      padding: 12px;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .install-banner.show {
+      display: block;
+    }
+    
+    .install-banner button {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .install-banner button:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    .offline-indicator {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #f59e0b;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      display: none;
+      z-index: 1000;
+    }
+    
+    .offline-indicator.show {
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+  <!-- Install Banner -->
+  <div id="installBanner" class="install-banner">
+    <span>📚 Installez BookSwap pour une meilleure expérience!</span>
+    <button id="installButton">Installer</button>
+    <button id="dismissBanner" class="dismiss-btn">✕</button>
+  </div>
+
+  <!-- Offline Indicator -->
+  <div id="offlineIndicator" class="offline-indicator">
+    <span class="material-symbols-outlined offline-icon">wifi_off</span>
+    <div class="offline-content">
+      <div class="offline-title">Mode hors ligne</div>
+      <div class="offline-details">
+        <small>Fonctions limitées : pas de sync, images externes indisponibles</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+    <!-- Top App Bar -->
+    <div class="sticky top-0 z-10 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm">
+      <div class="flex items-center p-4 pb-2 justify-between">
+        <div class="text-text-light dark:text-text-dark flex size-12 shrink-0 items-center justify-start">
+          <button id="menuButton" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <span class="material-symbols-outlined text-3xl">menu</span>
+          </button>
+        </div>
+        <h2 class="text-text-light dark:text-text-dark text-xl font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Ma Bibliothèque</h2>
+        <div class="flex w-12 items-center justify-end">
+          <button id="profileButton" class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 hover:ring-2 hover:ring-primary transition-all">
+            <div class="h-full w-full bg-primary rounded-full flex items-center justify-center text-white font-bold">
+              U
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="px-4 py-3">
+      <label class="flex flex-col min-w-40 h-12 w-full">
+        <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+          <div class="text-gray-500 dark:text-gray-400 flex border-none bg-white dark:bg-background-dark items-center justify-center pl-4 rounded-l-lg border-r-0">
+            <span class="material-symbols-outlined">search</span>
+          </div>
+          <input id="searchInput" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-white dark:bg-background-dark focus:border-none h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Rechercher par titre ou auteur..." value=""/>
+        </div>
+      </label>
+    </div>
+
+    <!-- Chips -->
+    <div class="flex gap-3 px-4 pb-3 overflow-x-auto">
+      <button class="filter-chip active flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-white pl-4 pr-4" data-filter="all">
+        <p class="text-sm font-medium leading-normal">Tous</p>
+      </button>
+      <button class="filter-chip flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-background-dark pl-4 pr-4" data-filter="read">
+        <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">Lus</p>
+      </button>
+      <button class="filter-chip flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-background-dark pl-4 pr-4" data-filter="reading">
+        <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">En cours</p>
+      </button>
+      <button class="filter-chip flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-background-dark pl-4 pr-4" data-filter="to-read">
+        <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">À lire</p>
+      </button>
+    </div>
+
+    <!-- Books Grid -->
+    <div id="booksGrid" class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 p-4">
+      <!-- Books will be loaded here by JavaScript -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="flex flex-col items-center justify-center text-center p-8 mt-10 hidden">
+      <span class="material-symbols-outlined text-6xl text-gray-400 dark:text-gray-500 mb-4">auto_stories</span>
+      <h3 class="text-xl font-semibold text-text-light dark:text-text-dark mb-2">Votre bibliothèque est vide</h3>
+      <p class="text-gray-500 dark:text-gray-400 mb-6">Ajoutez votre premier livre pour commencer!</p>
+      <button id="addFirstBook" class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] min-w-0 px-6 gap-3">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span>Ajouter un livre</span>
+      </button>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-6 right-6">
+      <button id="addBookFab" class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-16 w-16 bg-primary text-white shadow-lg transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
+        <span class="material-symbols-outlined text-3xl">add</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div id="loadingIndicator" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white dark:bg-background-dark rounded-lg p-6 flex flex-col items-center">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      <p class="mt-4 text-text-light dark:text-text-dark">Chargement...</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script>
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration);
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+
+    // PWA Install Prompt
+    let deferredPrompt;
+    const installBanner = document.getElementById('installBanner');
+    const installButton = document.getElementById('installButton');
+    const dismissBanner = document.getElementById('dismissBanner');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      if (!localStorage.getItem('installBannerDismissed')) {
+        installBanner.classList.add('show');
+      }
+    });
+
+    installButton.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+        deferredPrompt = null;
+        installBanner.classList.remove('show');
+      }
+    });
+
+    dismissBanner.addEventListener('click', () => {
+      installBanner.classList.remove('show');
+      localStorage.setItem('installBannerDismissed', 'true');
+    });
+
+    // Online/Offline Status
+    const offlineIndicator = document.getElementById('offlineIndicator');
+
+    function updateOnlineStatus() {
+      if (navigator.onLine) {
+        offlineIndicator.classList.remove('show');
+      } else {
+        offlineIndicator.classList.add('show');
+      }
+    }
+
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+    updateOnlineStatus();
+  </script>
+</body>
+</html>

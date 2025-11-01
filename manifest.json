@@ -1,0 +1,55 @@
+{
+  "name": "BookSwap - Ma Bibliothèque",
+  "short_name": "BookSwap",
+  "description": "Gérez votre bibliothèque personnelle et échangez des livres",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F5F5F5",
+  "theme_color": "#E2725B",
+  "orientation": "portrait-primary",
+  "scope": "./",
+  "lang": "fr",
+  "categories": [
+    "books",
+    "education",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/72x72/E2725B/FFFFFF?text=📚",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://via.placeholder.com/96x96/E2725B/FFFFFF?text=📚",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://via.placeholder.com/128x128/E2725B/FFFFFF?text=📚",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://via.placeholder.com/144x144/E2725B/FFFFFF?text=📚",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://via.placeholder.com/192x192/E2725B/FFFFFF?text=📚",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/E2725B/FFFFFF?text=📚",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}
