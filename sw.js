@@ -66,73 +66,111 @@ self.addEventListener('activate', (event) => {
 // Fetch event - serve cached content when offline or server down
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // CACHE FIRST STRATEGY: Return cached version if available
-        if (response) {
-          console.log('Service Worker: Serving from cache:', event.request.url);
-          return response;
-        }
-        
-        // Try to fetch from network with timeout
-        return fetchWithTimeout(event.request, 5000)
-          .then((response) => {
-            // Check if we received a valid response
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // Clone the response for caching
-            const responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          })
-          .catch((error) => {
-            console.log('Service Worker: Network failed, serving fallback:', error);
-            
-            // Handle different types of failed requests
-            if (event.request.destination === 'document') {
-              // Serve cached index.html for navigation requests
-              return caches.match('/index.html') || caches.match('/');
-            }
-            
-            // For image requests, return fallback image
-            if (event.request.destination === 'image') {
-              return new Response(FALLBACK_BOOK_IMAGE, {
-                headers: { 'Content-Type': 'image/svg+xml' }
-              });
-            }
-            
-            // For API calls, return cached data or error response
-            if (event.request.url.includes('/api/')) {
-              return new Response(JSON.stringify({
-                error: 'Serveur indisponible - Mode hors ligne',
-                cached: true,
-                timestamp: Date.now()
-              }), {
-                status: 503,
-                statusText: 'Service Unavailable',
-                headers: { 'Content-Type': 'application/json' }
-              });
-            }
-            
-            // For other requests, return a generic offline response
-            if (event.request.method === 'GET') {
-              return new Response('Service indisponible - Application en mode cache', {
-                status: 503,
-                statusText: 'Service Unavailable',
-                headers: { 'Content-Type': 'text/plain' }
-              });
-            }
-          });
-      })
+    handleFetchRequest(event.request)
   );
 });
+
+async function handleFetchRequest(request) {
+  try {
+    // CACHE FIRST STRATEGY: Return cached version if available
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      console.log('Service Worker: Serving from cache:', request.url);
+      return cachedResponse;
+    }
+    
+    // Try to fetch from network with timeout
+    try {
+      const response = await fetchWithTimeout(request, 5000);
+      
+      // Check if we received a valid response
+      if (!response || response.status !== 200 || response.type !== 'basic') {
+        return response;
+      }
+
+      // Clone the response for caching
+      const responseToCache = response.clone();
+      
+      // Cache the response (don't await to avoid blocking)
+      caches.open(CACHE_NAME)
+        .then((cache) => {
+          // Only cache GET requests and avoid caching chrome-extension requests
+          if (request.method === 'GET' && !request.url.startsWith('chrome-extension://')) {
+            cache.put(request, responseToCache);
+          }
+        })
+        .catch(error => console.log('Cache put error:', error));
+
+      return response;
+    } catch (networkError) {
+      console.log('Service Worker: Network failed, serving fallback:', networkError);
+      return handleOfflineFallback(request);
+    }
+  } catch (error) {
+    console.error('Service Worker: Fetch handler error:', error);
+    return handleOfflineFallback(request);
+  }
+}
+
+function handleOfflineFallback(request) {
+  // Handle different types of failed requests
+  if (request.destination === 'document') {
+    // Serve cached index.html for navigation requests
+    return caches.match('./index.html')
+      .then(response => response || caches.match('./'))
+      .then(response => response || new Response('Application hors ligne', {
+        status: 200,
+        statusText: 'OK',
+        headers: { 'Content-Type': 'text/html' }
+      }));
+  }
+  
+  // For image requests, return fallback image
+  if (request.destination === 'image') {
+    return new Response(FALLBACK_BOOK_IMAGE, {
+      headers: { 'Content-Type': 'image/svg+xml' }
+    });
+  }
+  
+  // For manifest.json requests
+  if (request.url.includes('manifest.json')) {
+    return caches.match('./manifest.json')
+      .then(response => response || new Response('{}', {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      }));
+  }
+  
+  // For API calls, return cached data or error response
+  if (request.url.includes('/api/')) {
+    return new Response(JSON.stringify({
+      error: 'Serveur indisponible - Mode hors ligne',
+      cached: true,
+      timestamp: Date.now()
+    }), {
+      status: 503,
+      statusText: 'Service Unavailable',
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+  
+  // For other GET requests, try to find in cache or return offline response
+  if (request.method === 'GET') {
+    return caches.match(request)
+      .then(response => response || new Response('Service indisponible - Application en mode cache', {
+        status: 503,
+        statusText: 'Service Unavailable',
+        headers: { 'Content-Type': 'text/plain' }
+      }));
+  }
+  
+  // For non-GET requests, return error
+  return new Response('Method not allowed offline', {
+    status: 405,
+    statusText: 'Method Not Allowed',
+    headers: { 'Content-Type': 'text/plain' }
+  });
+}
 
 // Helper function to fetch with timeout
 function fetchWithTimeout(request, timeout = 5000) {
@@ -223,13 +261,16 @@ self.addEventListener('notificationclick', (event) => {
   }
 });
 
-// Error handling
+// Error handling with better logging
 self.addEventListener('error', (event) => {
   console.error('Service Worker error:', event.error);
+  // Don't prevent default to allow proper error reporting
 });
 
 self.addEventListener('unhandledrejection', (event) => {
   console.error('Service Worker unhandled promise rejection:', event.reason);
+  // Prevent the unhandled rejection from causing issues
+  event.preventDefault();
 });
 
 // Helper function to cache important resources

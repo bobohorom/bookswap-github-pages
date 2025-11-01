@@ -8,6 +8,37 @@ class BookSwapApp {
     this.init();
   }
 
+  // Static utility function to safely encode SVG for data URL
+  static safeBtoa(str) {
+    try {
+      // Remove or replace problematic characters
+      const cleanStr = str
+        .replace(/[àáâãäå]/g, 'a')
+        .replace(/[èéêë]/g, 'e')
+        .replace(/[ìíîï]/g, 'i')
+        .replace(/[òóôõö]/g, 'o')
+        .replace(/[ùúûü]/g, 'u')
+        .replace(/[ýÿ]/g, 'y')
+        .replace(/[ñ]/g, 'n')
+        .replace(/[ç]/g, 'c')
+        .replace(/[À-ÿ]/g, '?'); // Replace any remaining accented characters
+      
+      return btoa(cleanStr);
+    } catch (error) {
+      console.warn('Failed to encode SVG, using fallback:', error);
+      // Fallback: create a simple SVG without special characters
+      const fallbackSvg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
+          <rect width="200" height="300" fill="#E2725B"/>
+          <rect x="20" y="20" width="160" height="260" fill="white" stroke="#333" stroke-width="2"/>
+          <text x="100" y="150" text-anchor="middle" fill="#666" font-family="Arial" font-size="16">Livre</text>
+          <text x="100" y="180" text-anchor="middle" fill="#666" font-family="Arial" font-size="12">non disponible</text>
+        </svg>
+      `;
+      return btoa(fallbackSvg);
+    }
+  }
+
   // Initialize the application
   init() {
     this.setupEventListeners();
@@ -30,7 +61,16 @@ class BookSwapApp {
         title: "Le Guide du voyageur galactique",
         author: "Douglas Adams",
         status: "read",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAICfGVUm01nIqFJAHTeR8RXK-MvtBG-9FtLh-Z4iBe9EcC1TPhQepAqQ64f1xGgFUxW9ygNluSAszlQ9Ug7fa6apVULS1uCjgRRnX5dDTJmJbueVzshvvFdqkOZHU9Dgc-27ClgExQbPDxb7e9GA3XsapVHLdqDRGr4OawJw-gIZvuDvsWe1aHVCJUlUMi1lTnmvCng7PMv5EbqID0Kxkxe6LX-4Fo482RvOpfGQVqCqxEpw8ADQDkqOUmkOUAzjIygfKsSgjI1edO",
+        image: `data:image/svg+xml;base64,${BookSwapApp.safeBtoa(`
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
+  <rect width="200" height="300" fill="#4F46E5"/>
+  <rect x="20" y="20" width="160" height="260" fill="white" stroke="#333" stroke-width="2"/>
+  <text x="100" y="80" text-anchor="middle" fill="#4F46E5" font-family="Arial" font-size="14" font-weight="bold">LE GUIDE</text>
+  <text x="100" y="100" text-anchor="middle" fill="#4F46E5" font-family="Arial" font-size="12">DU VOYAGEUR</text>
+  <text x="100" y="120" text-anchor="middle" fill="#4F46E5" font-family="Arial" font-size="12">GALACTIQUE</text>
+  <text x="100" y="200" text-anchor="middle" fill="#666" font-family="Arial" font-size="10">Douglas Adams</text>
+</svg>
+        `)}`,
         dateAdded: new Date().toISOString()
       },
       {
@@ -38,7 +78,16 @@ class BookSwapApp {
         title: "Ne tirez pas sur l'oiseau moqueur",
         author: "Harper Lee",
         status: "reading",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCzX0kwbPhujtvSJh98hspo_tn7ZfYxdYCHyQBo7fFuGRTBF6G1bLlDZ4zwNewvaEg2WFB9h7RsnyUJPjD3Mg7pdz5u66OcnV2tFw8O-WrKY9qntna5qechKXVn3MHGzia-peiFmCQXLVMABS8HC0DgLjd9eaIpecfXLBF74qHilYETXgTtTbviB_PxyTY-hvMi6Odt3kNRqsV57IUDchoxtmrqeoK6N9Yq5X4YiExekMbFeMLF6jGf8HpQdqDtqxNnxW_2xS2zItPc",
+        image: `data:image/svg+xml;base64,${BookSwapApp.safeBtoa(`
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
+  <rect width="200" height="300" fill="#DC2626"/>
+  <rect x="20" y="20" width="160" height="260" fill="white" stroke="#333" stroke-width="2"/>
+  <text x="100" y="70" text-anchor="middle" fill="#DC2626" font-family="Arial" font-size="12" font-weight="bold">NE TIREZ PAS</text>
+  <text x="100" y="90" text-anchor="middle" fill="#DC2626" font-family="Arial" font-size="12">SUR L'OISEAU</text>
+  <text x="100" y="110" text-anchor="middle" fill="#DC2626" font-family="Arial" font-size="12">MOQUEUR</text>
+  <text x="100" y="200" text-anchor="middle" fill="#666" font-family="Arial" font-size="10">Harper Lee</text>
+</svg>
+        `)}`,
         dateAdded: new Date().toISOString()
       },
       {
@@ -46,7 +95,14 @@ class BookSwapApp {
         title: "1984",
         author: "George Orwell",
         status: "to-read",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD7r2syx_B7dXfAyHx7kvzSDLo0GvWTjlYO0sEP8fz_LnY2cSpPfYTlKFbuMcl64-BYmO5qnOx8nydoUB7-XX7pPcmc5cTUcuNlkBZGte_HY4K5gUmgZKWBgSTu_Txet0Vlt8ecqhQf4P5v2olXV00JxI55BUNJA0ac9g0TxJ3b08zwHIkP5krZ8QdSJ5xiLx6WKCXdulzLb3nkyiwOT9LjHpuD6aWrM872CNsNDCy5wGTHxhW9zf9BEOQzoU6gv48xeD81YIS7ixll",
+        image: `data:image/svg+xml;base64,${BookSwapApp.safeBtoa(`
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
+  <rect width="200" height="300" fill="#1F2937"/>
+  <rect x="20" y="20" width="160" height="260" fill="white" stroke="#333" stroke-width="2"/>
+  <text x="100" y="100" text-anchor="middle" fill="#1F2937" font-family="Arial" font-size="24" font-weight="bold">1984</text>
+  <text x="100" y="200" text-anchor="middle" fill="#666" font-family="Arial" font-size="10">George Orwell</text>
+</svg>
+        `)}`,
         dateAdded: new Date().toISOString()
       },
       {
@@ -54,7 +110,16 @@ class BookSwapApp {
         title: "Le Seigneur des Anneaux",
         author: "J.R.R. Tolkien",
         status: "read",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAWstjN4eYWJrs5de9Hi7YcQE7dmg_xgOetOpIkwFWULs2dYtp0P4BVmeRY2u9y3Z8906qhKBoOP3Dn11PNO4YrqNdAn_xZ6Qd8buFuMo2_43JlT-qi1RYCwC_r3GEeTLamPt0SzvpAidV9KXPAFJHSaUrvfYhxNGBpu38dRYBIqyws7GEMZOb4sHhMxlcjrvP-x9eyN-JYeLWId7ReC7TKW5uhcTkmx96zPj_1G0tnMJAUX1nghJQ2IWsk3Rg0ZwVyCLDzJqt9nwYu",
+        image: `data:image/svg+xml;base64,${BookSwapApp.safeBtoa(`
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
+  <rect width="200" height="300" fill="#059669"/>
+  <rect x="20" y="20" width="160" height="260" fill="white" stroke="#333" stroke-width="2"/>
+  <text x="100" y="70" text-anchor="middle" fill="#059669" font-family="Arial" font-size="11" font-weight="bold">LE SEIGNEUR</text>
+  <text x="100" y="90" text-anchor="middle" fill="#059669" font-family="Arial" font-size="11">DES</text>
+  <text x="100" y="110" text-anchor="middle" fill="#059669" font-family="Arial" font-size="11">ANNEAUX</text>
+  <text x="100" y="200" text-anchor="middle" fill="#666" font-family="Arial" font-size="10">J.R.R. Tolkien</text>
+</svg>
+        `)}`,
         dateAdded: new Date().toISOString()
       },
       {
@@ -62,7 +127,15 @@ class BookSwapApp {
         title: "L'Attrape-cœurs",
         author: "J.D. Salinger",
         status: "reading",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDCwLsuYmUSHzqZj_LD6dxhFSsZreAgByQDqmj3XRGDJqR1RE9D8UPWyGreJM7OzKo5J3EInazAFh9XIwhd682Ergaid-hsdjjaJOqo66Uqrr5hpoJOuqsCyu_MRzEpcYGwAi4Orc1a_PYX8UHOyJRM9JkzGcKJTcMVrAf6Wm2j47JVBQCwOIJPLJOOexIwvWtFWGawUnRZGCgpNF4QW1r4bjrAqoqCbKDBVA0riHLbXWHEtwT8mgU4e5momx5rSHsGLjLWd6hG0tJe",
+        image: `data:image/svg+xml;base64,${BookSwapApp.safeBtoa(`
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
+  <rect width="200" height="300" fill="#7C3AED"/>
+  <rect x="20" y="20" width="160" height="260" fill="white" stroke="#333" stroke-width="2"/>
+  <text x="100" y="90" text-anchor="middle" fill="#7C3AED" font-family="Arial" font-size="14" font-weight="bold">L'ATTRAPE-</text>
+  <text x="100" y="110" text-anchor="middle" fill="#7C3AED" font-family="Arial" font-size="14">COEURS</text>
+  <text x="100" y="200" text-anchor="middle" fill="#666" font-family="Arial" font-size="10">J.D. Salinger</text>
+</svg>
+        `)}`,
         dateAdded: new Date().toISOString()
       },
       {
@@ -70,7 +143,16 @@ class BookSwapApp {
         title: "Orgueil et Préjugés",
         author: "Jane Austen",
         status: "to-read",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA9Hdm165NVDheUW7XhI7IV1A3GcQQkVVJienBu39HjgS03zQDC40mSahQSWRZNHiiwtxAT7re9EbA8q87KWn3HAq2MmfDrL9XkS_C4SqmabijnrbqM5uBKm97OU56Yd0IFaV7ppCqI65e4pvtA57w2dN4W0ApQPaKlZlcZUnHpDKsrbChD6OLRj8QbF5Lm-fZvd9C7dOXEfYmigHFjFQfNj3T13JMmIKDPWNjUU1Gw3xxIo6y04w_QBUJKhYJ7wHsxSiqtUgUBUQOf",
+        image: `data:image/svg+xml;base64,${BookSwapApp.safeBtoa(`
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
+  <rect width="200" height="300" fill="#EC4899"/>
+  <rect x="20" y="20" width="160" height="260" fill="white" stroke="#333" stroke-width="2"/>
+  <text x="100" y="80" text-anchor="middle" fill="#EC4899" font-family="Arial" font-size="12" font-weight="bold">ORGUEIL</text>
+  <text x="100" y="100" text-anchor="middle" fill="#EC4899" font-family="Arial" font-size="12">ET</text>
+  <text x="100" y="120" text-anchor="middle" fill="#EC4899" font-family="Arial" font-size="12">PREJUGES</text>
+  <text x="100" y="200" text-anchor="middle" fill="#666" font-family="Arial" font-size="10">Jane Austen</text>
+</svg>
+        `)}`,
         dateAdded: new Date().toISOString()
       }
     ];
@@ -237,18 +319,19 @@ class BookSwapApp {
   getImageUrl(originalUrl) {
     if (!navigator.onLine && this.isExternalUrl(originalUrl)) {
       // Return fallback SVG for offline external images
-      return `data:image/svg+xml;base64,${btoa(`
+      const fallbackSvg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
           <rect width="200" height="300" fill="#E2725B"/>
           <rect x="20" y="20" width="160" height="260" fill="white" stroke="#333" stroke-width="2"/>
           <line x1="40" y1="20" x2="40" y2="280" stroke="#ccc" stroke-width="1"/>
           <rect x="45" y="40" width="120" height="30" fill="#E2725B"/>
-          <text x="100" y="60" text-anchor="middle" fill="white" font-family="Arial" font-size="16" font-weight="bold">📚</text>
+          <text x="100" y="60" text-anchor="middle" fill="white" font-family="Arial" font-size="16" font-weight="bold">LIVRE</text>
           <text x="100" y="140" text-anchor="middle" fill="#666" font-family="Arial" font-size="11">Image non</text>
           <text x="100" y="155" text-anchor="middle" fill="#666" font-family="Arial" font-size="11">disponible</text>
           <text x="100" y="170" text-anchor="middle" fill="#666" font-family="Arial" font-size="11">hors ligne</text>
         </svg>
-      `)}`;
+      `;
+      return `data:image/svg+xml;base64,${BookSwapApp.safeBtoa(fallbackSvg)}`;
     }
     return originalUrl;
   }
@@ -353,7 +436,7 @@ class BookSwapApp {
       const author = modal.querySelector('#bookAuthor').value;
       const status = modal.querySelector('#bookStatus').value;
       // Générer une image SVG par défaut si pas d'URL fournie
-      const defaultImage = 'data:image/svg+xml;base64,' + btoa(`
+      const defaultImage = 'data:image/svg+xml;base64,' + BookSwapApp.safeBtoa(`
 <svg xmlns="http://www.w3.org/2000/svg" width="200" height="300" viewBox="0 0 200 300">
   <rect width="200" height="300" fill="#E2725B"/>
   <rect x="20" y="20" width="160" height="260" fill="white" stroke="#333" stroke-width="2"/>
@@ -445,19 +528,27 @@ class BookSwapApp {
         <h3 class="text-xl font-bold text-text-light dark:text-text-dark mb-4">Menu</h3>
         <div class="space-y-3">
           <button id="toggleTheme" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3">
-            <span class="material-symbols-outlined">dark_mode</span>
+            <svg class="icon-svg" viewBox="0 0 24 24">
+              <path d="M11.01 3.05C6.51 3.54 3 7.36 3 12c0 4.97 4.03 9 9 9 4.63 0 8.45-3.5 8.95-8 .09-.79-.78-1.42-1.54-.95-.84.54-1.84.95-2.91.95-2.98 0-5.4-2.42-5.4-5.4 0-1.06.41-2.06.95-2.91.47-.76-.16-1.63-.95-1.54z"/>
+            </svg>
             <span class="text-text-light dark:text-text-dark">Changer de thème</span>
           </button>
           <button id="exportData" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3">
-            <span class="material-symbols-outlined">download</span>
+            <svg class="icon-svg" viewBox="0 0 24 24">
+              <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+            </svg>
             <span class="text-text-light dark:text-text-dark">Exporter les données</span>
           </button>
           <button id="importData" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3">
-            <span class="material-symbols-outlined">upload</span>
+            <svg class="icon-svg" viewBox="0 0 24 24">
+              <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+            </svg>
             <span class="text-text-light dark:text-text-dark">Importer les données</span>
           </button>
           <button id="clearData" class="w-full text-left p-3 rounded-lg hover:bg-red-100 dark:hover:bg-red-900 text-red-600 dark:text-red-400 flex items-center gap-3">
-            <span class="material-symbols-outlined">delete</span>
+            <svg class="icon-svg" viewBox="0 0 24 24">
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+            </svg>
             <span>Effacer toutes les données</span>
           </button>
         </div>

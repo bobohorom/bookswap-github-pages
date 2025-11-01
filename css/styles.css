@@ -22,6 +22,31 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* SVG Icon styles for offline compatibility */
+.icon-svg {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.icon-svg.text-3xl {
+  width: 48px;
+  height: 48px;
+}
+
+.icon-svg.text-6xl {
+  width: 96px;
+  height: 96px;
+}
+
+/* Ensure SVG icons inherit text color properly */
+.icon-svg path {
+  fill: inherit;
+}
+
 /* Hide elements that should be hidden initially */
 .hidden {
   display: none !important;
