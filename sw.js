@@ -1,13 +1,10 @@
-const CACHE_NAME = 'bookswap-github-v1';
+const CACHE_NAME = 'bookswap-github-v2';
 const urlsToCache = [
   './',
   './index.html',
   './js/app.js',
   './css/styles.css',
-  './manifest.json',
-  'https://cdn.tailwindcss.com?plugins=forms,container-queries',
-  'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined',
-  'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap'
+  './manifest.json'
 ];
 
 // Fallback images for offline use
@@ -71,6 +68,15 @@ self.addEventListener('fetch', (event) => {
 });
 
 async function handleFetchRequest(request) {
+  // Skip external domains (CDNs) - let them fail gracefully
+  const url = new URL(request.url);
+  if (!url.origin.includes(self.location.origin)) {
+    console.log('Service Worker: Ignoring external request:', request.url);
+    return fetch(request).catch(() => {
+      return new Response('', { status: 404, statusText: 'External resource unavailable' });
+    });
+  }
+
   try {
     // CACHE FIRST STRATEGY: Return cached version if available
     const cachedResponse = await caches.match(request);
