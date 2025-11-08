@@ -3,59 +3,79 @@
   "short_name": "BookSwap",
   "description": "Gérez votre bibliothèque personnelle et échangez des livres",
   "start_url": "./",
+  "id": "/bookswap-github-pages/",
   "display": "standalone",
   "background_color": "#F5F5F5",
   "theme_color": "#E2725B",
   "orientation": "portrait-primary",
   "scope": "./",
   "lang": "fr",
+  "prefer_related_applications": false,
+  "display_override": ["window-controls-overlay", "standalone"],
   "categories": [
     "books",
     "education",
-    "lifestyle"
+    "lifestyle",
+    "productivity"
   ],
   "icons": [
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3MiIgaGVpZ2h0PSI3MiIgdmlld0JveD0iMCAwIDcyIDcyIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNFMjcyNUIiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjQzE1QTQ2Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iNzIiIGhlaWdodD0iNzIiIHJ4PSIxNiIgZmlsbD0idXJsKCNncmFkKSIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE4LDEyKSI+CiAgICA8cGF0aCBkPSJNMTAgNGgxNmMxIDAgMiAxIDIgMnYzMmMwIDEtMSAyLTIgMkgxMGMtMSAwLTItMS0yLTJWNmMwLTEgMS0yIDItMloiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICAgIDxwYXRoIGQ9Ik0xMCAyaDRjMSAwIDIgMSAyIDJ2MzZjMCAxLTEgMi0yIDJoLTRjLTEgMC0yLTEtMi0yVjRjMC0xIDEtMiAyLTJaIiBmaWxsPSJ3aGl0ZSIvPgogICAgPHBhdGggZD0iTTIyIDRoNGMxIDAgMiAxIDIgMnYzMmMwIDEtMSAyLTIgMmgtNGMtMSAwLTItMS0yLTJWNmMwLTEgMS0yIDItMloiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjgiLz4KICA8L2c+Cjwvc3ZnPg==",
+      "src": "/icons/icon-72x72.svg",
       "sizes": "72x72",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDk2IDk2Ij4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNFMjcyNUIiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjQzE1QTQ2Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHJ4PSIyMCIgZmlsbD0idXJsKCNncmFkKSIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI0LDE2KSI+CiAgICA8cGF0aCBkPSJNMTIgNGgyMGMxIDAgMiAxIDIgMnY0MGMwIDEtMSAyLTIgMkgxMmMtMSAwLTItMS0yLTJWNmMwLTEgMS0yIDItMloiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICAgIDxwYXRoIGQ9Ik0xMiAyaDVjMSAwIDIgMSAyIDJ2NDRjMCAxLTEgMi0yIDJoLTVjLTEgMC0yLTEtMi0yVjRjMC0xIDEtMiAyLTJaIiBmaWxsPSJ3aGl0ZSIvPgogICAgPHBhdGggZD0iTTI3IDRoNWMxIDAgMiAxIDIgMnY0MGMwIDEtMSAyLTIgMmgtNWMtMSAwLTItMS0yLTJWNmMwLTEgMS0yIDItMloiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjgiLz4KICA8L2c+Cjwvc3ZnPg==",
-      "sizes": "96x96",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQiIGhlaWdodD0iMTQ0IiB2aWV3Qm94PSIwIDAgMTQ0IDE0NCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjRTI3MjVCIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI0MxNUE0NiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjE0NCIgaGVpZ2h0PSIxNDQiIHJ4PSIzMiIgZmlsbD0idXJsKCNncmFkKSIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM2LDI0KSI+CiAgICA8cGF0aCBkPSJNMTggNmgyOGMxIDAgMiAxIDIgMnY1NmMwIDEtMSAyLTIgMkgxOGMtMSAwLTItMS0yLTJWOGMwLTEgMS0yIDItMloiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICAgIDxwYXRoIGQ9Ik0xOCAzaDdjMSAwIDIgMSAyIDJ2NjZjMCAxLTEgMi0yIDJoLTdjLTEgMC0yLTEtMi0yVjVjMC0xIDEtMiAyLTJaIiBmaWxsPSJ3aGl0ZSIvPgogICAgPHBhdGggZD0iTTM5IDZoN2MxIDAgMiAxIDIgMnY1NmMwIDEtMSAyLTIgMmgtN2MtMSAwLTItMS0yLTJWOGMwLTEgMS0yIDItMloiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjgiLz4KICA8L2c+Cjwvc3ZnPg==",
-      "sizes": "144x144",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMTkyIDE5MiI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA <c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjRTI3MjVCIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI0MxNUE0NiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSI0MCIgZmlsbD0idXJsKCNncmFkKSIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ4LDMyKSI+CiAgICA8cGF0aCBkPSJNMjQgOGgzNmMxIDAgMiAxIDIgMnY3MmMwIDEtMSAyLTIgMkgyNGMtMSAwLTItMS0yLTJWMTBjMC0xIDEtMiAyLTJaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNMjQgNGg5YzEgMCAyIDEgMiAydjg4YzAgMS0xIDItMiAyaC05Yy0xIDAtMi0xLTItMlY2YzAtMSAxLTIgMi0yWiIgZmlsbD0id2hpdGUiLz4KICAgIDxwYXRoIGQ9Ik01MSA4aDljMSAwIDIgMSAyIDJ2NzJjMCAxLTEgMi0yIDJoLTljLTEgMC0yLTEtMi0yVjEwYzAtMSAxLTIgMi0yWiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOCIvPgogIDwvZz4KPC9zdmc+",
+      "src": "/icons/icon-192x192.svg",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjRTI3MjVCIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI0MxNUE0NiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMDAiIGZpbGw9InVybCgjZ3JhZCkiLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMjgsODApIj4KICAgIDxwYXRoIGQ9Ik02NCAyMGg5NmMxIDAgMiAxIDIgMnYxOTJjMCAxLTEgMi0yIDJINjRjLTEgMC0yLTEtMi0yVjIyYzAtMSAxLTIgMi0yWiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgogICAgPHBhdGggZD0iTTY0IDEyaDI0YzEgMCAyIDEgMiAydjIzNmMwIDEtMSAyLTIgMkg2NGMtMSAwLTItMS0yLTJWMTRjMC0xIDEtMiAyLTJaIiBmaWxsPSJ3aGl0ZSIvPgogICAgPHBhdGggZD0iTTEzNiAyMGgyNGMxIDAgMiAxIDIgMnYxOTJjMCAxLTEgMi0yIDJoLTI0Yy0xIDAtMi0xLTItMlYyMmMwLTEgMS0yIDItMloiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjgiLz4KICA8L2c+Cjwvc3ZnPg==",
+      "src": "/icons/icon-512x512.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIyMCAyMCAxNTIgMTUyIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNFMjcyNUIiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjQzE1QTQ2Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8Y2lyY2xlIGN4PSI5NiIgY3k9Ijk2IiByPSI3NiIgZmlsbD0idXJsKCNncmFkKSIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ4LDMyKSI+CiAgICA8cGF0aCBkPSJNMjQgOGgzNmMxIDAgMiAxIDIgMnY3MmMwIDEtMSAyLTIgMkgyNGMtMSAwLTItMS0yLTJWMTBjMC0xIDEtMiAyLTJaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNMjQgNGg5YzEgMCAyIDEgMiAydjg4YzAgMS0xIDItMiAyaC05Yy0xIDAtMi0xLTItMlY2YzAtMSAxLTIgMi0yWiIgZmlsbD0id2hpdGUiLz4KICAgIDxwYXRoIGQ9Ik01MSA4aDljMSAwIDIgMSAyIDJ2NzJjMCAxLTEgMi0yIDJoLTljLTEgMC0yLTEtMi0yVjEwYzAtMSAxLTIgMi0yWiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOCIvPgogIDwvZz4KPC9zdmc+",
+      "src": "/icons/icon-192x192-maskable.svg",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "maskable"
     },
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSI1MiA1MiA0MDggNDA4Ij4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNFMjcyNUIiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjQzE1QTQ2Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjIwNCIgZmlsbD0idXJsKCNncmFkKSIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyOCw4MCkiPgogICAgPHBhdGggZD0iTTY0IDIwaDk2YzEgMCAyIDEgMiAydjE5MmMwIDEtMSAyLTIgMkg2NGMtMSAwLTItMS0yLTJWMjJjMC0xIDEtMiAyLTJaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNNjQgMTJoMjRjMSAwIDIgMSAyIDJ2MjM2YzAgMS0xIDItMiAySDY0Yy0xIDAtMi0xLTItMlYxNGMwLTEgMS0yIDItMloiIGZpbGw9IndoaXRlIi8+CiAgICA8cGF0aCBkPSJNMTM2IDIwaDI0YzEgMCAyIDEgMiAydjE5MmMwIDEtMSAyLTIgMmgtMjRjLTEgMC0yLTEtMi0yVjIyYzAtMSAxLTIgMi0yWiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOCIvPgogIDwvZz4KPC9zdmc+",
+      "src": "/icons/icon-512x512-maskable.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ajouter un livre",
+      "short_name": "Ajouter",
+      "description": "Ajouter rapidement un livre à votre bibliothèque",
+      "url": "./?action=add",
+      "icons": [
+        {
+          "src": "/icons/add-96x96.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Ma bibliothèque",
+      "short_name": "Biblio",
+      "description": "Voir ma collection de livres",
+      "url": "./?view=library",
+      "icons": [
+        {
+          "src": "/icons/library-96x96.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
     }
   ]
 }
